@@ -51,13 +51,13 @@ namespace Shooting.Database {
     };
 
     public static Competitor Competitor1 { get; set; } = new() {
-      Name = "Gustas",
-      Surname = "Klevinskas"
+      FirstName = "Gustas",
+      LastName = "Klevinskas"
     };
 
     public static Competitor Competitor2 { get; set; } = new() {
-      Name = "Greta",
-      Surname = "Ramonaitė"
+      FirstName = "Greta",
+      LastName = "Ramonaitė"
     };
 
     public static Competition Competition1 { get; set; } = new() {
