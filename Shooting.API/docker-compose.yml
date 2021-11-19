@@ -3,6 +3,22 @@ version: "3.9"
 services:
   api:
     build: .
+    environment:
+      SQLCONNSTR_PostgreSQL: Host=db; Database=shooting; Password=pass
+      Jwt__Secret: "Super duper Docker secret"
     container_name: shooting-api
     ports:
       - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    container_name: shooting-db
+    environment:
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - shooting-db:/var/lib/postgresql/data
+
+volumes:
+  shooting-db: {}

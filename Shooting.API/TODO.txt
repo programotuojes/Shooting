@@ -1,0 +1,2 @@
+[ ] Only save date (and not time)
+[ ] Trim all strings
