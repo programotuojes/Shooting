@@ -23,7 +23,7 @@ namespace API.Services {
       var post = mapper.Map<Post>(model);
       post.CreatedById = userId;
 
-      dataContext.Add(post);
+      dataContext.Add((object)post);
       dataContext.SaveChanges();
 
       return dataContext.Posts
@@ -41,7 +41,6 @@ namespace API.Services {
 
     public IEnumerable<PostReadAllModel> ReadAll() {
       return dataContext.Posts
-        .Include(x => x.CreatedBy)
         .AsNoTracking()
         .ProjectTo<PostReadAllModel>(mapper.ConfigurationProvider);
     }

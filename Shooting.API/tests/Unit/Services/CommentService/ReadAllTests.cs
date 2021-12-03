@@ -1,5 +1,6 @@
 namespace Unit.Services.CommentService {
   using System;
+  using System.Linq;
   using API.Models.Comment;
   using API.Services;
   using Customizations;
@@ -8,41 +9,44 @@ namespace Unit.Services.CommentService {
   using FluentAssertions;
   using Xunit;
 
-  public class CreateTests {
+  public class ReadAllTests {
 
     [Theory]
     [CustomAutoData]
     public void PostExists_ReturnsCreatedComment(
       DataContext dataContext,
       CommentService service,
-      CommentCreateModel model,
       Post post,
-      User user
+      Comment comment
     ) {
       // Arrange
+      post.Comments.Add(comment);
       dataContext.Posts.Add(post);
       dataContext.SaveChanges();
 
       // Act
-      var result = service.Create(post.Id, model, user.Id);
+      var result = service.ReadAll(post.Id)?.ToList();
 
       // Assert
       result.Should().NotBeNull();
-      result!.Body.Should().Be(model.Body);
-      result.CreatedBy.Should().Be(user.Username);
+      result.Should()
+        .HaveCount(1)
+        .And
+        .ContainEquivalentOf(new CommentReadModel {
+          Id = comment.Id,
+          Body = comment.Body,
+          CreatedBy = comment.CreatedBy.Username,
+          CreatedOn = comment.CreatedOn
+        });
     }
 
     [Theory]
     [CustomAutoData]
-    public void PostDoesNotExist_ReturnsNull(
-      CommentService service,
-      CommentCreateModel model,
-      User user
-    ) {
+    public void PostDoesNotExist_ReturnsNull(CommentService service) {
       // Arrange
 
       // Act
-      var result = service.Create(Guid.Empty, model, user.Id);
+      var result = service.ReadAll(Guid.Empty);
 
       // Assert
       result.Should().BeNull();

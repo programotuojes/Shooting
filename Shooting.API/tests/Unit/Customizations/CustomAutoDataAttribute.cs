@@ -7,6 +7,7 @@ namespace Unit.Customizations {
     public CustomAutoDataAttribute() :
       base(() => new Fixture()
         .Customize(new AutoMoqCustomization { ConfigureMembers = true })
+        .Customize(new EmptyEntityListCustomization())
         .Customize(new AutoMapperCustomization())
         .Customize(new DataContextCustomization())
       ) { }

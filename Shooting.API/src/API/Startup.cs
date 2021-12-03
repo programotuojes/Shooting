@@ -38,7 +38,7 @@ namespace API {
     }
 
     // Use this method to configure the HTTP request pipeline
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext) {
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
       app.UseMiddleware<ErrorHandlerMiddleware>();
       app.UseMiddleware<JwtMiddleware>();
 

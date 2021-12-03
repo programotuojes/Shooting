@@ -12,9 +12,7 @@ namespace Unit.Models.Competitor {
     [InlineData(3000, 1)]
     public void BirthYearSpecified_ExpectedResult(int birthYear, int errorCount) {
       // Arrange
-      var model = new CompetitorCreateModel {
-        BirthYear = birthYear
-      };
+      var model = new CompetitorCreateModel { BirthYear = birthYear };
 
       // Act
       var results = model.Validate(new ValidationContext(model));
