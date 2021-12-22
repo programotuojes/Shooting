@@ -1,0 +1,11 @@
+#root {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 250px;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding-bottom: 500px
+  }
+}

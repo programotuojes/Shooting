@@ -27,7 +27,7 @@ namespace API.Authorization {
       if (user == null || roles.Any() && !roles.Contains(user.Role)) {
         // Not logged in or role not authorized
         context.Result = new JsonResult(new { message = "Unauthorized" })
-          { StatusCode = StatusCodes.Status401Unauthorized };
+          { StatusCode = StatusCodes.Status403Forbidden };
       }
     }
   }

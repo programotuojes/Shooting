@@ -23,7 +23,7 @@ namespace API.Services {
       var post = mapper.Map<Post>(model);
       post.CreatedById = userId;
 
-      dataContext.Add((object)post);
+      dataContext.Add(post);
       dataContext.SaveChanges();
 
       return dataContext.Posts

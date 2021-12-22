@@ -4,6 +4,7 @@ namespace API.Models.Competitor {
   using System.ComponentModel.DataAnnotations;
 
   public class CompetitorCreateModel : IValidatableObject {
+
     [Required]
     [MinLength(1)]
     [MaxLength(30)]

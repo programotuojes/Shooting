@@ -28,6 +28,9 @@ namespace Unit.Services.PostService {
         .ContainEquivalentOf(new PostReadAllModel {
           Id = post.Id,
           Title = post.Title,
+          Description = post.Description,
+          ImageUrl = post.ImageUrl,
+          ImageLabel = post.ImageLabel,
           CreatedBy = post.CreatedBy.Username,
           CreatedOn = post.CreatedOn
         });

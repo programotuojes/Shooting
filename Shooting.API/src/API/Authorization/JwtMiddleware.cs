@@ -11,8 +11,10 @@ namespace API.Authorization {
     }
 
     public async Task Invoke(HttpContext context, UserService userService, JwtUtils jwtUtils) {
-      if (context.Request.Path == "/API/users")
+      if (context.Request.Path == "/API/users") {
         await next(context);
+        return;
+      }
 
       var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last() ?? string.Empty;
       var userId = jwtUtils.ValidateJwtToken(token);

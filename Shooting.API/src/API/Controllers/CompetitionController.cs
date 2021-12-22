@@ -6,7 +6,6 @@ namespace API.Controllers {
   using Models.Competition;
   using Services;
 
-  [Authorize(Role.Admin)]
   [ApiController]
   [Route("API/competitions")]
   public class CompetitionController : ControllerBase {
@@ -17,6 +16,7 @@ namespace API.Controllers {
       this.competitionService = competitionService;
     }
 
+    [Authorize(Role.Admin)]
     [HttpPost]
     public ActionResult<CompetitionReadModel> Create(CompetitionCreateModel model) {
       var competition = competitionService.Create(model);
@@ -41,6 +41,7 @@ namespace API.Controllers {
       return Ok(competitions);
     }
 
+    [Authorize(Role.Admin)]
     [HttpPut("{id:guid}")]
     public ActionResult<CompetitionReadModel> Update(Guid id, [FromBody] CompetitionCreateModel model) {
       var competition = competitionService.Update(id, model);
@@ -49,6 +50,7 @@ namespace API.Controllers {
       return Ok(competition);
     }
 
+    [Authorize(Role.Admin)]
     [HttpDelete("{id:guid}")]
     public ActionResult Delete(Guid id) {
       var deleted = competitionService.Delete(id);

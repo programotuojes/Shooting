@@ -1,11 +1,8 @@
 namespace API.Controllers {
-  using System.Collections.Generic;
   using Authorization;
-  using DB.Entities;
   using Microsoft.AspNetCore.Mvc;
   using Models.Users;
 
-  [Authorize]
   [ApiController]
   [Route("API/users")]
   public class UserController : ControllerBase {
@@ -26,13 +23,6 @@ namespace API.Controllers {
     public ActionResult<AuthResponseModel> Login(AuthRequestModel model) {
       var response = userService.Authenticate(model);
       return Ok(response);
-    }
-
-    [Authorize(Role.Admin)]
-    [HttpGet]
-    public ActionResult<IEnumerable<User>> GetAll() {
-      var users = userService.GetAll();
-      return Ok(users);
     }
   }
 }

@@ -4,6 +4,8 @@ namespace API.Models.Users {
 
   public class AuthResponseModel {
 
+    public AuthResponseModel() {}
+
     public AuthResponseModel(User user, string token) {
       Id = user.Id;
       Username = user.Username;

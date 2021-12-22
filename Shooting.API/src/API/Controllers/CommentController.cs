@@ -1,5 +1,6 @@
 namespace API.Controllers {
   using System;
+  using System.Collections.Generic;
   using System.Net;
   using Authorization;
   using DB.Entities;
@@ -38,7 +39,7 @@ namespace API.Controllers {
 
     [AllowAnonymous]
     [HttpGet]
-    public ActionResult<CommentReadModel> ReadAll(Guid postId) {
+    public ActionResult<IEnumerable<CommentReadModel>> ReadAll(Guid postId) {
       var comments = commentService.ReadAll(postId);
       if (comments == null) return NotFound();
 
@@ -47,32 +48,26 @@ namespace API.Controllers {
 
     [HttpPut("{commentId:guid}")]
     public ActionResult<CommentReadModel> Update(Guid postId, Guid commentId, [FromBody] CommentCreateModel model) {
-      var user = (User) HttpContext.Items["User"]!;
-
       var createdById = commentService.GetCreatedById(commentId);
       if (createdById == null) return NotFound();
 
-      if (user.Id != createdById && user.Role != Role.Admin)
-        return StatusCode((int)HttpStatusCode.Forbidden);
+      var user = (User) HttpContext.Items["User"]!;
+      if (user.Id != createdById) return StatusCode((int)HttpStatusCode.Forbidden);
 
       var comment = commentService.Update(postId, commentId, model);
-      if (comment == null) return NotFound();
 
       return Ok(comment);
     }
 
     [HttpDelete("{commentId:guid}")]
     public ActionResult Delete(Guid postId, Guid commentId) {
-      var user = (User) HttpContext.Items["User"]!;
-
       var createdById = commentService.GetCreatedById(commentId);
       if (createdById == null) return NotFound();
 
-      if (user.Id != createdById && user.Role != Role.Admin)
-        return StatusCode((int)HttpStatusCode.Forbidden);
+      var user = (User) HttpContext.Items["User"]!;
+      if (user.Id != createdById) return StatusCode((int)HttpStatusCode.Forbidden);
 
-      var deleted = commentService.Delete(postId, commentId);
-      if (!deleted) return NotFound();
+      commentService.Delete(postId, commentId);
 
       return NoContent();
     }

@@ -44,10 +44,6 @@ namespace API.Authorization {
       return new AuthResponseModel(user, jwtToken);
     }
 
-    public IEnumerable<User> GetAll() {
-      return dataContext.Users;
-    }
-
     public User GetById(Guid id) {
       var user = dataContext.Users.Find(id);
       if (user == null) throw new KeyNotFoundException("User not found");

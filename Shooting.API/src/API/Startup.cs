@@ -22,6 +22,7 @@ namespace API {
       services.AddDbContext<DataContext>(options =>
         options.UseNpgsql(configuration.GetConnectionString("PostgreSQL")));
 
+      services.AddCors();
       services.AddControllers()
         .AddJsonOptions(options =>
           options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -39,6 +40,11 @@ namespace API {
 
     // Use this method to configure the HTTP request pipeline
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+      app.UseCors(x => x
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+
       app.UseMiddleware<ErrorHandlerMiddleware>();
       app.UseMiddleware<JwtMiddleware>();
 

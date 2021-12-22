@@ -28,7 +28,10 @@ namespace Unit.Services.PostService {
         .BeEquivalentTo(new PostReadModel {
           Id = post.Id,
           Title = post.Title,
+          Description = post.Description,
           Body = post.Body,
+          ImageUrl = post.ImageUrl,
+          ImageLabel = post.ImageLabel,
           CreatedBy = post.CreatedBy.Username,
           CreatedOn = post.CreatedOn
         });
